@@ -1,12 +1,12 @@
 package com.italocosta.tasklist.domain;
 
-import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 
 @Entity
 public class Tarefa {
@@ -15,12 +15,21 @@ public class Tarefa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
     @Column(unique = true)
     private String nome;
     private Double custo;
-    private LocalDate dataLimite;
-    private  static Integer ordem = 0;
+    private String dataLimite;
+    private Integer ordemExibicao;
+    private static Integer contador = 0;
+    
+
+    public Tarefa() {}
+
+    @PrePersist
+    public void iniciarContadorExibicao() {
+        contador++;
+        this.ordemExibicao = contador;
+    }
 
 
     public Long getId() {
@@ -43,17 +52,21 @@ public class Tarefa {
         this.custo = custo;
     }
 
-    public LocalDate getDataLimite() {
+    public String getDataLimite() {
         return dataLimite;
     }
 
-    public void setDataLimite(LocalDate dataLimite) {
+    public void setDataLimite(String dataLimite) {
         this.dataLimite = dataLimite;
     }
 
-    public Integer getOrdem() {
-        return ordem;
+    public Integer getOrdemExibicao() {
+        return ordemExibicao;
     }
-   
+
+    public void setOrdemExibicao(Integer ordemExibicao) {
+        this.ordemExibicao = ordemExibicao;
+    }
+
 
 }
