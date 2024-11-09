@@ -7,8 +7,8 @@ public interface TarefaService {
     Iterable<Tarefa> listarTarefas();
     void novaTarefa(Tarefa tarefa);
     void excluirTarefa(Long id);
-    Tarefa atualizarTarefa(Long id, Tarefa tarefa);
-    void reordenarTarefa(Integer ordem);
+    void atualizarTarefa(Long id, Tarefa tarefa);
+    void reordenarTarefa(Long id, Integer ordem);
     boolean validarNome(String nome);
     
 }

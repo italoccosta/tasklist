@@ -43,12 +43,16 @@ public class TarefaController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{id}")
-    ResponseEntity<Tarefa> editarTarefa(@PathVariable Long id, @RequestBody Tarefa attTarefa) {
-        if (tarefaService.validarNome(attTarefa.getNome())) {
-            throw new IllegalArgumentException();
-        } 
-        return ResponseEntity.ok(tarefaService.atualizarTarefa(id, attTarefa));
+    @PutMapping("/atualizar/{id}")
+    ResponseEntity<Void> editarTarefa(@PathVariable Long id, @RequestBody Tarefa attTarefa) {
+        tarefaService.atualizarTarefa(id, attTarefa);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/reordenar/{id}")
+    ResponseEntity<Void> reordenarTarefa(@PathVariable Long id, Integer novaOrdem) {
+       tarefaService.reordenarTarefa(id, novaOrdem);
+        return ResponseEntity.ok().build();
     }
     
 }

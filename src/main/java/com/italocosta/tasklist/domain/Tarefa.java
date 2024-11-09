@@ -25,11 +25,6 @@ public class Tarefa {
 
     public Tarefa() {}
 
-    @PrePersist
-    public void iniciarContadorExibicao() {
-        contador++;
-        this.ordemExibicao = contador;
-    }
 
 
     public Long getId() {
@@ -66,6 +61,13 @@ public class Tarefa {
 
     public void setOrdemExibicao(Integer ordemExibicao) {
         this.ordemExibicao = ordemExibicao;
+    }
+
+    
+    @PrePersist
+    public void iniciarContadorExibicao() {
+        contador++;
+        this.ordemExibicao = contador;
     }
 
 
