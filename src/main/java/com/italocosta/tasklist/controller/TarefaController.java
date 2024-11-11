@@ -38,8 +38,8 @@ public class TarefaController {
     }
 
     @DeleteMapping
-    ResponseEntity<Void> excluirTarefa(Long id) {
-        tarefaService.excluirTarefa(id);
+    ResponseEntity<Void> excluirTarefa(Integer ordem) {
+        tarefaService.excluirTarefa(ordem);
         return ResponseEntity.ok().build();
     }
 

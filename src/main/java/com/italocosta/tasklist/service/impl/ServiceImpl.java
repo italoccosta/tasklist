@@ -30,8 +30,8 @@ public class ServiceImpl implements TarefaService {
     }
 
     @Override
-    public void excluirTarefa(Long id) {
-        tarefaRepository.deleteById(id);
+    public void excluirTarefa(Integer ordem) {
+        tarefaRepository.deleteByOrdemExibicao(ordem);
     }
 
     @Override
