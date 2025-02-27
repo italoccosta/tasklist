@@ -3,8 +3,10 @@ package com.italocosta.tasklist.service.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.italocosta.tasklist.domain.Tarefa;
 import com.italocosta.tasklist.domain.repository.TarefaRepository;
@@ -30,21 +32,25 @@ public class ServiceImpl implements TarefaService {
     }
 
     @Override
-    public void excluirTarefa(Integer ordem) {
-        tarefaRepository.deleteByOrdemExibicao(ordem);
+    public void excluirTarefa(Long id) {
+        tarefaRepository.deleteById(id);
     }
 
     @Override
     public void atualizarTarefa(Long id, Tarefa novaTarefa) {
         var tarefaAntiga = tarefaRepository.findById(id);
         if (tarefaAntiga.isPresent()) {
+            if (validarNome(novaTarefa.getNome()) && !tarefaAntiga.get().getNome().equals(novaTarefa)) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nome já existe!");
+            }
             Tarefa nova = tarefaAntiga.get();
             nova.setNome(novaTarefa.getNome());
             nova.setCusto(novaTarefa.getCusto());
             nova.setDataLimite(novaTarefa.getDataLimite());
             tarefaRepository.save(nova);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada.");
         }
-
     }
 
     @Override
